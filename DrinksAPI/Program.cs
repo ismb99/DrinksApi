@@ -1,28 +1,42 @@
-﻿
+﻿using DrinksAPI;
+using Newtonsoft.Json;
+using RestSharp;
+using System.Net;
 
 
-//var client = new RestClient("https://jsonplaceholder.typicode.com/posts");
-//var payload = new JObject();
-//payload.Add("title", "some cool post title");
-//payload.Add("body", "some cool body content");
-//var requset = new RestRequest();
-//requset.AddStringBody(payload.ToString(), DataFormat.Json);
-//var result = client.PostAsync(requset).Result;
+GetByingredients();
 
+//var client = new RestClient("https://www.thecocktaildb.com/api/json/v1/1/");
+//var request = new RestRequest("list.php?c=list");
+//var response = await client.ExecuteAsync(request);
 
-//getEmployeeData();
-
-//static void getEmployeeData()
+//if (response.StatusCode == HttpStatusCode.OK &&  response != null)
 //{
-//    var client = new RestClient("https://dummy.restapiexample.com/api/v1");
-//    var request = new RestRequest("employees");
-//    var response = client.Execute(request);
+//    string rawResponse = response.Content;
+//    var result = JsonConvert.DeserializeObject<CategoryDrinks>(rawResponse);
 
-//    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+//    foreach (var item in result.Drinks)
 //    {
-//        string rawResponse = response.Content;
-//        var result = JsonConvert.DeserializeObject<Rootobject>(rawResponse);
+//        Console.WriteLine(item.strCategory);
 //    }
+//}
 
 
+void  GetByingredients()
+{
+    var client = new RestClient("https://www.thecocktaildb.com/api/json/v1/1/");
+    var request = new RestRequest("list.php?i=list");
+    var response =  client.ExecuteAsync(request);
 
+    if (response.Result.StatusCode == HttpStatusCode.OK)
+    {
+        string rawResponse = response.Result.Content;
+        var result = JsonConvert.DeserializeObject<CategoryDrinks>(rawResponse);
+
+        foreach (var item in result.Drinks)
+        {
+            Console.WriteLine(item.strIngredient1);
+        }
+    }
+}
+    

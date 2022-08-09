@@ -10,7 +10,7 @@ namespace DrinksAPI
 {
     public class TableVisualition
     {
-        //public static void ShowTable(List<> tableData)
+        //public static void ShowTable(List<Drinks> tableData)
         //{
         //    Console.WriteLine("\n\n");
 
