@@ -4,39 +4,21 @@ using RestSharp;
 using System.Net;
 
 
-GetByingredients();
 
-//var client = new RestClient("https://www.thecocktaildb.com/api/json/v1/1/");
-//var request = new RestRequest("list.php?c=list");
-//var response = await client.ExecuteAsync(request);
+var client = new RestClient("https://www.thecocktaildb.com/api/json/v1/1/");
+var request = new RestRequest("list.php?c=list");
+var response = await client.ExecuteAsync(request);
 
-//if (response.StatusCode == HttpStatusCode.OK &&  response != null)
-//{
-//    string rawResponse = response.Content;
-//    var result = JsonConvert.DeserializeObject<CategoryDrinks>(rawResponse);
-
-//    foreach (var item in result.Drinks)
-//    {
-//        Console.WriteLine(item.strCategory);
-//    }
-//}
-
-
-void  GetByingredients()
+if (response.StatusCode == HttpStatusCode.OK && response != null)
 {
-    var client = new RestClient("https://www.thecocktaildb.com/api/json/v1/1/");
-    var request = new RestRequest("list.php?i=list");
-    var response =  client.ExecuteAsync(request);
+    string rawResponse = response.Content;
+    var result = JsonConvert.DeserializeObject<CategoryDrinks>(rawResponse);
 
-    if (response.Result.StatusCode == HttpStatusCode.OK)
+    foreach (var item in result.Drinks)
     {
-        string rawResponse = response.Result.Content;
-        var result = JsonConvert.DeserializeObject<CategoryDrinks>(rawResponse);
-
-        foreach (var item in result.Drinks)
-        {
-            Console.WriteLine(item.strIngredient1);
-        }
+        Console.WriteLine(item.strCategory);
     }
 }
-    
+
+
+
