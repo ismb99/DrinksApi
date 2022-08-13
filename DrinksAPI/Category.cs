@@ -13,10 +13,8 @@ namespace DrinksAPI
         public string strCategory { get; set; }
     }
 
-    public class CategoryDrinks
+    public class Categories
     {
-        //public List<Category> Drinks { get; set; }
-        public List<Drink> Drinks { get; set; }
-
+        public List<Category> Drinks { get; set; }
     }
 }

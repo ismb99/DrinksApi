@@ -60,4 +60,5 @@ namespace DrinksAPI
         public string strCreativeCommonsConfirmed { get; set; }
         public string dateModified { get; set; }
     }
+
 }
