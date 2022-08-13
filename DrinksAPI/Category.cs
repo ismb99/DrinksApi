@@ -16,6 +16,5 @@ namespace DrinksAPI
     public class Categories
     {
         public List<Category> Drinks { get; set; }
-
     }
 }

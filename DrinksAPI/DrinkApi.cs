@@ -11,45 +11,107 @@ namespace DrinksAPI
 {
     public class DrinkApi
     {
-        public void GetDrinksByCategory()
+        RestClient BaseUrl = new RestClient("https://www.thecocktaildb.com/api/json/v1/1/");
+
+
+        public void GetCategory()
         {
-
-            var client = new RestClient("https://www.thecocktaildb.com/api/json/v1/1/");
             var request = new RestRequest("list.php?c=list");
-            var response =  client.ExecuteAsync(request);
-            List<Category> categories = new();
+            var response = BaseUrl.ExecuteAsync(request);
 
-            if (response.Result.StatusCode == HttpStatusCode.OK && response != null)
+
+            if (response.Result.IsSuccessful)
             {
                 string rawResponse = response.Result.Content;
                 var result = JsonConvert.DeserializeObject<Categories>(rawResponse);
-
-
-                categories = result.Drinks;
+                List<Category> categories = result.Drinks;
 
                 TableVisualition.ShowTable(categories, "Drinks Category");
 
+                Console.WriteLine("\nChoose category");
+                var input = UserInput.GetStringInput();
+                GetDrinksByCategory(input);
             }
         }
 
-        public  void DrinkName()
+        //public void DrinkName()
+        //{
+        //    var request = new RestRequest("filter.php?c=Ordinary_Drink");
+        //    var response = BaseUrl.ExecuteAsync(request);
+
+        //    List<OrdinaryDrink> ordinaryDrinks = new();
+
+        //    if (response.Result.StatusCode == HttpStatusCode.OK && response != null)
+        //    {
+        //        string rawResponse = response.Result.Content;
+        //        var result = JsonConvert.DeserializeObject<OrdinaryDrinkList>(rawResponse);
+
+        //        ordinaryDrinks = result.OrdinaryDrinkNames;
+
+        //        TableVisualition.ShowTable(ordinaryDrinks, "Ordinary Drinks List");
+        //    }
+        //}
+
+        public void GetDrinksByCategory(string name)
         {
-            var client = new RestClient("https://www.thecocktaildb.com/api/json/v1/1/");
-            var request = new RestRequest("filter.php?c=Ordinary_Drink");
-            var response = client.ExecuteAsync(request);
+            var request = new RestRequest($"filter.php?c={name}");
+            var response = BaseUrl.ExecuteAsync(request);
 
-            List<OrdinaryDrink> ordinaryDrinks = new();
-
-
-            if (response.Result.StatusCode == HttpStatusCode.OK && response != null)
+            var res = response;
+            if (response.Result.IsSuccessful)
             {
                 string rawResponse = response.Result.Content;
                 var result = JsonConvert.DeserializeObject<OrdinaryDrinkList>(rawResponse);
 
-                ordinaryDrinks = result.OrdinaryDrinkNames;
+                if (result == null)
+                {
+                    Console.WriteLine("Wrong input try again, press any key to continue");
+                    Console.ReadLine();
+                    GetCategory();
 
 
-                TableVisualition.ShowTable(ordinaryDrinks, "Ordinary Drinks List");
+                    //Console.WriteLine("\nChoose category");
+                    //var input = UserInput.GetStringInput();
+                    //GetDrinksByCategory(input);
+                }
+
+                else
+                {
+                List<OrdinaryDrink> drinkType = result?.OrdinaryDrinkNames;
+                TableVisualition.ShowTable(drinkType, name.ToUpper());
+                }
+                
+            }
+        }
+
+        public void GetDrinksById(string id)
+        {
+            var request = new RestRequest($"lookup.php?s={id}");
+            var response = BaseUrl.ExecuteAsync(request);
+
+            var res = response;
+            if (response.Result.IsSuccessful)
+            {
+                string rawResponse = response.Result.Content;
+                var result = JsonConvert.DeserializeObject<OrdinaryDrinkList>(rawResponse);
+
+                if (result == null)
+                {
+                    Console.WriteLine("Wrong input try again, press any key to continue");
+                    Console.ReadLine();
+                    GetCategory();
+
+
+                    //Console.WriteLine("\nChoose category");
+                    //var input = UserInput.GetStringInput();
+                    //GetDrinksByCategory(input);
+                }
+
+                else
+                {
+                    List<OrdinaryDrink> drinkType = result?.OrdinaryDrinkNames;
+                    TableVisualition.ShowTable(drinkType, id.ToUpper());
+                }
 
             }
         }
