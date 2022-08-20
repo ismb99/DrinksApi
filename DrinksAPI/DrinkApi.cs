@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DrinksAPI.Models;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,9 @@ namespace DrinksAPI
 {
     public class DrinkApi
     {
-        RestClient BaseUrl = new RestClient("https://www.thecocktaildb.com/api/json/v1/1/");
+        static RestClient BaseUrl = new RestClient("https://www.thecocktaildb.com/api/json/v1/1/");
 
-
-        public void GetCategory()
+        public static void GetCategory()
         {
             var request = new RestRequest("list.php?c=list");
             var response = BaseUrl.ExecuteAsync(request);
@@ -25,33 +25,20 @@ namespace DrinksAPI
                 var result = JsonConvert.DeserializeObject<Categories>(rawResponse);
                 List<Category> categories = result.Drinks;
 
-                TableVisualition.ShowTable(categories, "Drinks Category");
+                TableVisualition.ShowTable(categories, null);
 
-                Console.WriteLine("\nChoose category");
+                Console.WriteLine("\nChoose category, or press m to return to main menu");
                 var input = UserInput.GetStringInput();
-                GetDrinksByCategory(input);
+                if (input == "m")
+                    Menu.ShowMenu();
+                else
+                    GetDrinksByCategory(input);
             }
         }
 
-        //public void DrinkName()
-        //{
-        //    var request = new RestRequest("filter.php?c=Ordinary_Drink");
-        //    var response = BaseUrl.ExecuteAsync(request);
 
-        //    List<OrdinaryDrink> ordinaryDrinks = new();
 
-        //    if (response.Result.StatusCode == HttpStatusCode.OK && response != null)
-        //    {
-        //        string rawResponse = response.Result.Content;
-        //        var result = JsonConvert.DeserializeObject<OrdinaryDrinkList>(rawResponse);
-
-        //        ordinaryDrinks = result.OrdinaryDrinkNames;
-
-        //        TableVisualition.ShowTable(ordinaryDrinks, "Ordinary Drinks List");
-        //    }
-        //}
-
-        public void GetDrinksByCategory(string name)
+        public static void GetDrinksByCategory(string name)
         {
             var request = new RestRequest($"filter.php?c={name}");
             var response = BaseUrl.ExecuteAsync(request);
@@ -79,9 +66,12 @@ namespace DrinksAPI
                     List<OrdinaryDrink> drinkType = result?.OrdinaryDrinkNames;
                     TableVisualition.ShowTable(drinkType, name.ToUpper());
 
-                    Console.WriteLine("\nChoose a drink by id");
+                    Console.WriteLine("\nChoose a drink by id, or press m to return to main menu");
                     var drinkId = UserInput.GetStringInput();
-                    GetDrinksById(drinkId);
+                    if (drinkId == "m")
+                        Menu.ShowMenu();
+                    else
+                        GetDrinksById(drinkId);
 
 
                 }
@@ -89,7 +79,7 @@ namespace DrinksAPI
             }
         }
 
-        public void GetDrinksById(string id)
+        public static void GetDrinksById(string id)
         {
             var request = new RestRequest($"lookup.php?i={id}");
             var response = BaseUrl.ExecuteAsync(request);

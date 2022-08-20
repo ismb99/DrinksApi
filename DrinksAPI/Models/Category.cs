@@ -6,11 +6,12 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace DrinksAPI
+namespace DrinksAPI.Models
 {
     public class Category
     {
-        public string? strCategory { get; set; }
+        [JsonProperty("strCategory")]
+        public string? DrinksCategory { get; set; }
     }
 
     public class Categories

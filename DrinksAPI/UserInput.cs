@@ -26,6 +26,7 @@ namespace DrinksAPI
             //Console.Write(message);
 
             string input = Console.ReadLine();
+          
 
             while (String.IsNullOrEmpty(input))
             {

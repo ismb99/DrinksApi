@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DrinksAPI
+namespace DrinksAPI.Models
 {
     public class Drink
     {

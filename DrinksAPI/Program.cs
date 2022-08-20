@@ -4,12 +4,8 @@ using RestSharp;
 using System.Net;
 
 
-DrinkApi drinkApi = new();
 
-drinkApi.GetCategory();
-
-
-
+DrinkApi.GetCategory();
 
 //Console.WriteLine("\nChoose drink");
 //var input = UserInput.GetStringInput();
