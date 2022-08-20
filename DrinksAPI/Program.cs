@@ -9,9 +9,11 @@ DrinkApi drinkApi = new();
 drinkApi.GetCategory();
 
 
-//Console.WriteLine("\nChoose category");
-//string category = Console.ReadLine();
-//drinkApi.GetDrinksById("11003");
+
+
+//Console.WriteLine("\nChoose drink");
+//var input = UserInput.GetStringInput();
+//drinkApi.GetDrinksById(input);
 
 
 
