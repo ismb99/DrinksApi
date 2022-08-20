@@ -10,7 +10,6 @@ namespace DrinksAPI
 {
     public class TableVisualition
     {
-
         public static void ShowTable<T>(List<T> tableData, [AllowNull] string tableName) where T : class
         {
             Console.Clear();
