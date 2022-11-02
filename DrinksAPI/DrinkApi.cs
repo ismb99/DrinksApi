@@ -15,10 +15,12 @@ namespace DrinksAPI
     {
         static RestClient BaseUrl = new RestClient("https://www.thecocktaildb.com/api/json/v1/1/");
 
-        public  void GetCategory()
+        public List<Category> GetCategory()
         {
             var request = new RestRequest("list.php?c=list");
             var response = BaseUrl.ExecuteAsync(request);
+
+            List<Category> categories = new();
 
             if (response.Result.IsSuccessful)
             {
@@ -26,19 +28,25 @@ namespace DrinksAPI
 
                 var result = JsonConvert.DeserializeObject<Categories>(rawResponse);
                
-                List<Category> categories = result.CategoriesList;
+               categories = result.CategoriesList;
+               
 
                 TableVisualition.ShowTable(categories, "Categories Menu");
+                return categories;
+
             }
-            
+
+            return categories;
         }
 
 
 
-        public  void GetDrinksByCategory(string category)
+        public List<Drink>GetDrinksByCategory(string category)
         {
             var request = new RestRequest($"filter.php?c={category}");
             var response = BaseUrl.ExecuteAsync(request);
+
+            List<Drink> drinks = new();
 
             if (response.Result.IsSuccessful)
             {
@@ -46,13 +54,13 @@ namespace DrinksAPI
 
                 var result = JsonConvert.DeserializeObject<Drinks>(rawResponse);
 
-                List<Drink> returnedList = result.DrinkList;
+                drinks = result.DrinkList;
 
-                TableVisualition.ShowTable(returnedList, "Drinks Menu");
-
-               
+                TableVisualition.ShowTable(drinks, "Drinks Menu");
+                return drinks;
 
             }
+            return drinks;
         }
 
         internal void GetDrink(string? drink)
