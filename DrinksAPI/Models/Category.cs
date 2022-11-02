@@ -16,6 +16,8 @@ namespace DrinksAPI.Models
 
     public class Categories
     {
-        public List<Category>? Drinks { get; set; }
+        [JsonProperty("drinks")]
+
+        public List<Category>? CategoriesList { get; set; }
     }
 }

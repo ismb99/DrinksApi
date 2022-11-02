@@ -16,10 +16,7 @@ namespace DrinksAPI
 
             if (tableName == null)
                 tableName = "";
-            foreach (var item in tableData)
-            {
-                Console.WriteLine(item);
-            }
+           
             Console.WriteLine("\n\n");
 
             ConsoleTableBuilder
